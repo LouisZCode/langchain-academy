@@ -29,11 +29,11 @@ def node_1(state):
 
 def node_2(state):
     print("---Node 2---")
-    return {"graph_state":state['graph_state'] +" happy!"}
+    return print({"graph_state":state['graph_state'] +" happy!"})
 
 def node_3(state):
     print("---Node 3---")
-    return {"graph_state":state['graph_state'] +" sad!"}
+    return print({"graph_state":state['graph_state'] +" sad!"})
 
 # Build graph
 builder = StateGraph(State)
