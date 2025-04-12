@@ -62,7 +62,7 @@ builder.add_edge("tool_calling_llm", END)
 graph = builder.compile()
 
 # View
-display(Image(graph.get_graph().draw_mermaid_png()))
+#display(Image(graph.get_graph().draw_mermaid_png()))
 
 #Here we have the original message
 messages = graph.invoke({"messages": HumanMessage(content=f"{human_says}", name="Luis")})

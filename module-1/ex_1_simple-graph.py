@@ -75,4 +75,6 @@ display(Image(graph.get_graph().draw_mermaid_png()))
 #When invoke is called, the graph starts execution from the START node and then it goes in order until the
 #END node is reached.
 #Each Node receives the current state and overrides it...
-graph.invoke({"graph_state" : "Hi  whatever initial string here,"})
+value = input("You:\n")
+graph.invoke({"graph_state" : f"{value}"})
+
