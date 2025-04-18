@@ -37,7 +37,7 @@ def decide_mood(state) -> Literal["node_2", "node_3"]:
     return "node_3"
 
 # Build graph
-builder = StateGraph(TypedDictState)
+builder = StateGraph(TypeDictState)
 builder.add_node("node_1", node_1)
 builder.add_node("node_2", node_2)
 builder.add_node("node_3", node_3)
