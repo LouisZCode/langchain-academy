@@ -1,10 +1,22 @@
 from langchain_core.messages import HumanMessage, SystemMessage, RemoveMessage
 from langgraph.graph import MessagesState
 from langgraph.graph import StateGraph, START, END
+from langchain_anthropic import ChatAnthropic
+from dotenv import load_dotenv
+
+#Lets send all the run information to langsmith
+import os
+os.environ["LANGCHAIN_PROJECT"] = "Module_3_Chatbot"
 
 # We will use this model for both the conversation and the summarization
-from langchain_openai import ChatOpenAI
-model = ChatOpenAI(model="gpt-4o", temperature=0) 
+load_dotenv()
+
+# Using Claude
+llm = ChatAnthropic(
+    model="claude-3-sonnet-20240229",
+    temperature=0
+)
+
 
 # State class to store messages and summary
 class State(MessagesState):
@@ -28,7 +40,7 @@ def call_model(state: State):
     else:
         messages = state["messages"]
     
-    response = model.invoke(messages)
+    response = llm.invoke(messages)
     return {"messages": response}
 
 # Determine whether to end or summarize the conversation
@@ -65,7 +77,7 @@ def summarize_conversation(state: State):
 
     # Add prompt to our history
     messages = state["messages"] + [HumanMessage(content=summary_message)]
-    response = model.invoke(messages)
+    response = llm.invoke(messages)
     
     # Delete all but the 2 most recent messages and add our summary to the state 
     delete_messages = [RemoveMessage(id=m.id) for m in state["messages"][:-2]]
@@ -83,3 +95,4 @@ workflow.add_edge("summarize_conversation", END)
 
 # Compile
 graph = workflow.compile()
+
